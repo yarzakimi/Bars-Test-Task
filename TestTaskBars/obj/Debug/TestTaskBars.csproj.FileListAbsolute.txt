@@ -6,3 +6,16 @@ C:\Users\Рустам Жуманиёзов\documents\visual studio 2015\Projects
 C:\Users\Рустам Жуманиёзов\documents\visual studio 2015\Projects\TestTaskBars\TestTaskBars\obj\Debug\TestTaskBars.csprojResolveAssemblyReference.cache
 C:\Users\Рустам Жуманиёзов\documents\visual studio 2015\Projects\TestTaskBars\TestTaskBars\obj\Debug\TestTaskBars.exe
 C:\Users\Рустам Жуманиёзов\documents\visual studio 2015\Projects\TestTaskBars\TestTaskBars\obj\Debug\TestTaskBars.pdb
+C:\Users\Рустам Жуманиёзов\Documents\Visual Studio 2015\Projects\TestTaskBars\TestTaskBars\bin\Debug\EntityFramework.dll
+C:\Users\Рустам Жуманиёзов\Documents\Visual Studio 2015\Projects\TestTaskBars\TestTaskBars\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Рустам Жуманиёзов\Documents\Visual Studio 2015\Projects\TestTaskBars\TestTaskBars\bin\Debug\Npgsql.EntityFramework.dll
+C:\Users\Рустам Жуманиёзов\Documents\Visual Studio 2015\Projects\TestTaskBars\TestTaskBars\bin\Debug\EntityFramework.xml
+C:\Users\Рустам Жуманиёзов\Documents\Visual Studio 2015\Projects\TestTaskBars\TestTaskBars\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Рустам Жуманиёзов\Documents\Visual Studio 2015\Projects\TestTaskBars\TestTaskBars\bin\Debug\Npgsql.xml
+C:\Users\Рустам Жуманиёзов\Documents\Visual Studio 2015\Projects\TestTaskBars\TestTaskBars\bin\Debug\Npgsql.EntityFramework.xml
+C:\Users\Рустам Жуманиёзов\Documents\Visual Studio 2015\Projects\TestTaskBars\TestTaskBars\bin\Debug\de\Npgsql.resources.dll
+C:\Users\Рустам Жуманиёзов\Documents\Visual Studio 2015\Projects\TestTaskBars\TestTaskBars\bin\Debug\es\Npgsql.resources.dll
+C:\Users\Рустам Жуманиёзов\Documents\Visual Studio 2015\Projects\TestTaskBars\TestTaskBars\bin\Debug\fi\Npgsql.resources.dll
+C:\Users\Рустам Жуманиёзов\Documents\Visual Studio 2015\Projects\TestTaskBars\TestTaskBars\bin\Debug\fr\Npgsql.resources.dll
+C:\Users\Рустам Жуманиёзов\Documents\Visual Studio 2015\Projects\TestTaskBars\TestTaskBars\bin\Debug\ja\Npgsql.resources.dll
+C:\Users\Рустам Жуманиёзов\Documents\Visual Studio 2015\Projects\TestTaskBars\TestTaskBars\bin\Debug\zh-CN\Npgsql.resources.dll
