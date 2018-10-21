@@ -31,7 +31,7 @@ namespace TestTaskBars
             {
                 var request = this._service.Spreadsheets.Values.Get(
                     this._spreadsheetId,
-                    this._range);
+                    this._sheetName + "!" + _range);
 
                 var response = await request.ExecuteAsync();
                 return response.Values;

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Google.Apis.Sheets.v4;
+using Google.Apis.Sheets.v4.Data;
 
 namespace TestTaskBars
 {
@@ -80,6 +83,53 @@ namespace TestTaskBars
 
             return objNewRecords;
         }
+
+        public static List<string> GetSheetsList(SheetsService service, string spreadsheetId)
+        {
+            var ssRequest = service.Spreadsheets.Get(spreadsheetId);
+            Spreadsheet ss = ssRequest.Execute();
+
+            List<string> sheetList = new List<string>();
+
+            foreach (Sheet sheet in ss.Sheets)
+            {
+                sheetList.Add(sheet.Properties.Title);
+            }
+            return sheetList;
+        }
+
+        public static void AddSheet(SheetsService service, string spreadsheetId, string sheetName)
+        {
+            string new_sheetName = sheetName;
+            var addSheetRequest = new AddSheetRequest();
+            addSheetRequest.Properties = new SheetProperties();
+            addSheetRequest.Properties.Title = new_sheetName;
+            BatchUpdateSpreadsheetRequest batchUpdateSpreadsheetRequest = new BatchUpdateSpreadsheetRequest();
+            batchUpdateSpreadsheetRequest.Requests = new List<Request>();
+            batchUpdateSpreadsheetRequest.Requests.Add(new Request
+            {
+                AddSheet = addSheetRequest
+            });
+
+            var batchUpdateRequest =
+                service.Spreadsheets.BatchUpdate(batchUpdateSpreadsheetRequest, spreadsheetId);
+
+            batchUpdateRequest.Execute();
+        }
+
+        public static List<string> GetServersList()
+        {
+            List<string> serverList = new List<string>();
+
+            for(int i=0; i<ConfigurationManager.ConnectionStrings.Count; i++)
+            {
+                if (ConfigurationManager.ConnectionStrings[i].ProviderName == "Npgsql")
+                    serverList.Add(ConfigurationManager.ConnectionStrings[i].Name);
+            }
+
+            return serverList;
+        }
+
         public class SheetCellNumeric
         {
             public int ColumnNumber;

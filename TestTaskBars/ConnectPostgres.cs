@@ -11,11 +11,18 @@ namespace TestTaskBars
 {
     class ConnectPostgres
     {
+        private readonly string _serverName;
+        private readonly string _connectionParams;
+        
+        public ConnectPostgres(string serverName, string connectionParams)
+        {
+            this._serverName = serverName;
+            this._connectionParams = connectionParams;
+        }        
         public IList<IList<Object>> GetTable()
         {
             List<IList<Object>> table = new List<IList<Object>>();
-            DataTable test_table = new DataTable();
-            string connection_params = ConfigurationManager.ConnectionStrings["LocalServer"].ConnectionString;
+            DataTable test_table = new DataTable();            
             string sql_request = @"SELECT pg_database.datname
                                         AS database_name,
                                     pg_database_size(pg_database.datname)
@@ -32,7 +39,7 @@ namespace TestTaskBars
                                         AS database_size
                             FROM pg_database
                             ORDER BY database_size_bytes ASC;";            
-            NpgsqlConnection connection = new NpgsqlConnection(connection_params);
+            NpgsqlConnection connection = new NpgsqlConnection(this._connectionParams);
             NpgsqlCommand execute_command = new NpgsqlCommand(sql_request, connection);
             connection.Open();
             NpgsqlDataReader reader;
@@ -42,7 +49,7 @@ namespace TestTaskBars
                 try
                 {
                     IList<Object> current_row = new List<Object>();
-                    current_row.Add("LocalServer");
+                    current_row.Add(this._serverName);
                     current_row.Add(reader.GetString(0));
                     current_row.Add(reader.GetValue(1));
                     current_row.Add(reader.GetString(2));

@@ -27,7 +27,7 @@ namespace TestTaskBars
         {
             try
             {
-                var range = sheetCellNumber; // "Basic!B111";
+                var range = this._sheetName + "!" + sheetCellNumber; // "Basic!B111";
                 var valueRange = new ValueRange() { Values = valueToWrite };
                 
                 //valueRange.Values = valueToWrite;
