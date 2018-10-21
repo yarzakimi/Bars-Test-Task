@@ -25,19 +25,19 @@ namespace TestTaskBars
             size_server.Columns.Add("Database", typeof(string));
             size_server.Columns.Add("Size in bytes", typeof(long));
             size_server.Columns.Add("Size", typeof(string));
-            size_server.Columns.Add("Update date", typeof(DateTime));
-            ConnectPostgres test = new ConnectPostgres();
-            DataTable server = new DataTable();
-            server = test.GetTable(size_server);
-            foreach (DataRow row in server.Rows)
+            size_server.Columns.Add("Update date", typeof(DateTime));*/
+            ConnectPostgres server = new ConnectPostgres();
+            IList<IList<Object>> server_databases = new List<IList<Object>>();
+            server_databases = server.GetTable();
+            foreach(var sublist in server_databases)
             {
-                foreach (var item in row.ItemArray)
+                foreach(var cell in sublist)
                 {
-                    Console.Write(item + "\t");
+                    Console.Write(cell + "\t");
                 }
                 Console.WriteLine();
             }
-            Console.Read();*/
+            Console.Read();
             //ConnectGoogle sheet = new ConnectGoogle();
             //sheet.TestFunction();
 
@@ -58,7 +58,7 @@ namespace TestTaskBars
                         ApplicationName = ApplicationName
                     });
 
-            List<IList<Object>> test_table = new List<IList<Object>>();
+            /*List<IList<Object>> test_table = new List<IList<Object>>();
             Random rnd = new Random();
             for(int i=0; i<4; i++)
             {
@@ -71,10 +71,10 @@ namespace TestTaskBars
                 obj.Add(DateTime.Now.ToString("d.M.yyyy"));
 
                 test_table.Add(obj);
-            }
+            }*/
 
-            IList<IList<Object>> whatTowrite = Helper.GenerateData(test_table);
-            string searchValue = "Server1";
+            IList<IList<Object>> whatTowrite = Helper.GenerateData(server_databases);
+            //string searchValue = "Server1";
 
             var dataReader = new SheetDataReader(service, spreadsheetId, sheetName, range);
             var sheetDataTask = dataReader.ReadDataAsync();

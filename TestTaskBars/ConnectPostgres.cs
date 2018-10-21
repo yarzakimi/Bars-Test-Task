@@ -11,8 +11,9 @@ namespace TestTaskBars
 {
     class ConnectPostgres
     {
-        public DataTable GetTable(DataTable table)
+        public IList<IList<Object>> GetTable()
         {
+            List<IList<Object>> table = new List<IList<Object>>();
             DataTable test_table = new DataTable();
             string connection_params = ConfigurationManager.ConnectionStrings["LocalServer"].ConnectionString;
             string sql_request = @"SELECT pg_database.datname
@@ -40,13 +41,13 @@ namespace TestTaskBars
             {
                 try
                 {
-                    DataRow current_row = table.NewRow();
-                    current_row[0] = "LocalServer";                    
-                    current_row[1] = reader.GetString(0);
-                    current_row[2] = reader.GetValue(1);
-                    current_row[3] = reader.GetString(2);
-                    current_row[4] = DateTime.Now;
-                    table.Rows.Add(current_row);
+                    IList<Object> current_row = new List<Object>();
+                    current_row.Add("LocalServer");
+                    current_row.Add(reader.GetString(0));
+                    current_row.Add(reader.GetValue(1));
+                    current_row.Add(reader.GetString(2));
+                    current_row.Add(DateTime.Now.ToString("dd.MM.yyyy"));
+                    table.Add(current_row);
                 }
                 catch { }
             }
