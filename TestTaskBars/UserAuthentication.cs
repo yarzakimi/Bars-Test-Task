@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Configuration;
 using System.IO;
 using System.Threading;
@@ -29,7 +26,7 @@ namespace TestTaskBars
                         "user",
                         CancellationToken.None,
                         new FileDataStore(credPath, true)).Result;
-                Console.WriteLine("Credential file saved to: " + credPath);
+                Console.WriteLine(DateTime.Now.ToString() + ": Credential file saved to: " + credPath);
             }
 
             return credential;

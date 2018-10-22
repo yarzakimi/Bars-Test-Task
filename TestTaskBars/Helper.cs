@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
 
@@ -73,11 +71,21 @@ namespace TestTaskBars
 
             obj.Add("Сервер");
             obj.Add("База данных");
-            obj.Add("Размер в байтах");
-            obj.Add("Размер");
+            obj.Add("Размер в ГБ");
             obj.Add("Дата обновления");
 
             objNewRecords.Add(obj);
+
+            foreach(var row in table)
+            {
+                row[2] = Helper.FormatBytes(Convert.ToInt64(row[2].ToString()));
+            }
+            table[table.Count-1][2] = Convert.ToDouble(ConfigurationManager.AppSettings[table[table.Count-1][0].ToString()]) - Convert.ToDouble(table[table.Count-1][2]);
+
+            foreach(var row in table)
+            {
+                row[2] = String.Format("{0:0.##}", row[2]);
+            }
 
             objNewRecords.AddRange(table);
 
@@ -90,6 +98,7 @@ namespace TestTaskBars
             new_spreadsheet.Properties = new SpreadsheetProperties();
             new_spreadsheet.Properties.Title = spreadsheetName;
             var createRequest = service.Spreadsheets.Create(new_spreadsheet).Execute();
+            Console.WriteLine(DateTime.Now.ToString() + ": Created new Google Spreadsheets '{0}'. URL: {1}", spreadsheetName, createRequest.SpreadsheetUrl);
             return createRequest.SpreadsheetId;
         }
 
@@ -124,6 +133,7 @@ namespace TestTaskBars
                 service.Spreadsheets.BatchUpdate(batchUpdateSpreadsheetRequest, spreadsheetId);
 
             batchUpdateRequest.Execute();
+            Console.WriteLine(DateTime.Now.ToString() + ": New sheet created for server {0}", sheetName);
         }
 
         public static List<string> GetServersList()
@@ -158,8 +168,20 @@ namespace TestTaskBars
             }
             catch (ConfigurationErrorsException)
             {
-                Console.WriteLine("Error writing app settings");
+                Console.WriteLine(DateTime.Now.ToString() + ": Error writing app settings");
             }
+        }
+
+        public static double FormatBytes(long bytes)
+        {
+            string[] Suffix = { "B", "KB", "MB", "GB"};
+            int i;
+            double dblSByte = bytes;
+            for (i = 0; i < Suffix.Length; i++, bytes /= 1024)
+            {
+                dblSByte = bytes / 1024.0;
+            }
+            return dblSByte;
         }
 
         public class SheetCellNumeric

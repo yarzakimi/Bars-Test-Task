@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
 using Npgsql;
-using System.Configuration;
 
 namespace TestTaskBars
 {
@@ -26,22 +22,25 @@ namespace TestTaskBars
             string sql_request = @"SELECT pg_database.datname
                                         AS database_name,
                                     pg_database_size(pg_database.datname)
-                                        AS database_size_bytes,
-                                    pg_size_pretty(pg_database_size(pg_database.datname))
-                                        AS database_size
+                                        AS database_size_bytes                                    
                             FROM pg_database
                             UNION ALL
-                            SELECT 'TOTAL'
+                            SELECT 'Свободно'
                                         AS database_name,
                                     sum(pg_database_size(pg_database.datname))
-                                        AS database_size_bytes,
-                                    pg_size_pretty(sum(pg_database_size(pg_database.datname)))
-                                        AS database_size
-                            FROM pg_database
-                            ORDER BY database_size_bytes ASC;";            
+                                        AS database_size_bytes
+                            FROM pg_database;";            
             NpgsqlConnection connection = new NpgsqlConnection(this._connectionParams);
             NpgsqlCommand execute_command = new NpgsqlCommand(sql_request, connection);
-            connection.Open();
+            try
+            {
+                connection.Open();
+                Console.WriteLine(DateTime.Now.ToString() + ": Successful connection to server {0}", this._serverName);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(DateTime.Now.ToString() + ": Failed connection to server {0}: {1}", this._serverName, ex.ToString());
+            }
             NpgsqlDataReader reader;
             reader = execute_command.ExecuteReader();
             while (reader.Read())
@@ -52,11 +51,13 @@ namespace TestTaskBars
                     current_row.Add(this._serverName);
                     current_row.Add(reader.GetString(0));
                     current_row.Add(reader.GetValue(1));
-                    current_row.Add(reader.GetString(2));
                     current_row.Add(DateTime.Now.ToString("dd.MM.yyyy"));
                     table.Add(current_row);
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(DateTime.Now.ToString() + ": Error in processing sql-request: {0}", ex.ToString());
+                }
             }
             connection.Close();
             return table;

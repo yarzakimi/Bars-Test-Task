@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Google.Apis.Sheets.v4;
 using Google.Apis.Sheets.v4.Data;
@@ -38,7 +36,7 @@ namespace TestTaskBars
             }
             catch (Exception)
             {
-                throw new Exception("Error in writing data");
+                throw new Exception(DateTime.Now.ToString() + ": Error in writing data");
             }
         }
     }
