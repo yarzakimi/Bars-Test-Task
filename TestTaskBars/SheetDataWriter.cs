@@ -29,9 +29,7 @@ namespace TestTaskBars
             {
                 var range = this._sheetName + "!" + sheetCellNumber; // "Basic!B111";
                 var valueRange = new ValueRange() { Values = valueToWrite };
-                
-                //valueRange.Values = valueToWrite;
-
+                                
                 var update = this._service.Spreadsheets.Values.Update(valueRange, this._sheetId, range);
                 update.ValueInputOption =
                     SpreadsheetsResource.ValuesResource.UpdateRequest.ValueInputOptionEnum.USERENTERED;

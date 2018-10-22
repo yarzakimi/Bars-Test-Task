@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
 using System.IO;
 using System.Threading;
 using Google.Apis.Auth.OAuth2;
@@ -16,7 +17,8 @@ namespace TestTaskBars
         {
             UserCredential credential;
 
-            using (var stream = new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
+            //using (var stream = new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
+            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(ConfigurationManager.AppSettings["credentials"])))
             {
                 var credPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
                 credPath = Path.Combine(credPath, ".credentials/sheets.googleapis.com-dotnet-quickstart.json");

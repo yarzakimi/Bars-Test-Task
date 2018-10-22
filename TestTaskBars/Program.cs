@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,22 @@ namespace TestTaskBars
     {
         static void Main(string[] args)
         {
+            Timer timer = new Timer(new TimerCallback(Timer_Task), null, 1000, 60000);
+            
+            Console.WriteLine("Что бы остановить выполнение программы нажмите 'q'");
+
+            ConsoleKeyInfo keypress;
+            do
+            {
+                Task.Delay(1000).Wait();
+                keypress = Console.ReadKey();
+
+            } while (keypress.KeyChar != 'q');
+            timer.Dispose();
+        }
+
+        public static void Timer_Task(object source)
+        {
             List<string> serverList = Helper.GetServersList();
             foreach (var srv in serverList)
             {
@@ -36,10 +53,7 @@ namespace TestTaskBars
                     }
                     Console.WriteLine();
                 }
-                Console.Read();
-
-                var spreadsheetId = ConfigurationManager.AppSettings["SheetId"];
-                //var sheetName = ConfigurationManager.AppSettings["SheetName"];
+                                
                 var range = ConfigurationManager.AppSettings["ReaderRange"];
 
                 string[] scopes = { SheetsService.Scope.Spreadsheets };
@@ -54,6 +68,13 @@ namespace TestTaskBars
                             HttpClientInitializer = credential,
                             ApplicationName = ApplicationName
                         });
+
+                var spreadsheetId = ConfigurationManager.AppSettings["SheetId"];
+                if(spreadsheetId == "")
+                {
+                    spreadsheetId = Helper.CreateSpreadsheet(service, "TestTaskBars");
+                    Helper.AddOrUpdateAppSettings("SheetId", spreadsheetId);
+                }
 
                 List<string> sheetList = Helper.GetSheetsList(service, spreadsheetId);
 
